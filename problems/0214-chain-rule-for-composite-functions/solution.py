@@ -17,18 +17,10 @@ def compute_chain_rule_gradient(functions: list[str], x: float) -> float:
 		['sin', 'square'] represents sin(x²)
 		['exp', 'sin', 'square'] represents exp(sin(x²))
 	"""
-	match functions[-1]:
-			case "square":
-				g, g_der = x**2, 2*x
-			case "sin":
-				g, g_der = math.sin(x), math.cos(x)
-			case "exp":
-				g, g_der = math.exp(x), math.exp(x)
-			case "log":
-				g, g_der = math.log(x), 1/x
+	g, g_der = x, 1
 
-	for i in range(len(functions)-2, -1, -1):
-		match functions[i]:
+	for f in reversed(functions):
+		match f:
 			case "square":
 				g, g_der = g**2, 2*g * g_der
 			case "sin":
